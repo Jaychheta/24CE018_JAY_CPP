@@ -61,18 +61,16 @@ int main() {
         else if (choice == 2 || choice == 3) {
             cout << "Enter Item ID: ";
             cin >> id;
-            bool found = false;
             for (int i = 0; i < count; i++) {
                 if (items[i].getId() == id) {
                     if (choice == 2)
                         items[i].addStock();
                     else
                         items[i].sell();
-                    found = true;
                     break;
                 }
             }
-            if (!found) cout << "Item not found!";
+            cout << "Item not found!";
         } 
         else if (choice == 4) {
             for (int i = 0; i < count; i++)
