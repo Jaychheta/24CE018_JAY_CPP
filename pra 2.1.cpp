@@ -1,142 +1,99 @@
-/*
-Write a program to define a Rectangle class with the following:
-Data Members:
-o Length and Width (private)
-Member Functions:
-o SetDimensions(int l, int w) to Set the Length and Width.
-o Area() to calculate and return the Area of the Rectangle.
-o Perimeter() to calculate and return the Perimeter.
-Tasks:
-o Create multiple Rectangle objects.
-o Initialize their Dimensions and display their Area and Perimeter.
-*/
-
-/*
-A local construction company frequently deals with rectangular plots and structures of varying
-Dimensions. To streamline their planning and estimation processes, the company requires a simple
-System to manage and analyze rectangular shapes efficiently.
-The System must be able to handle multiple Rectangles, each with distinct Dimensions. For each
-Rectangle, the Length and Width need to be defined and stored securely. Additionally, the company
-needs the ability to calculate two key metrics for any given Rectangle:
-The Area, to estimate usable space or material coverage. The Perimeter, to estimate boundary Lengths
-or material requirements for edges. To make this System functional, there should be a way to define
-or Update the Dimensions of any Rectangle as required. The System should be capable of creating and
-managing multiple Rectangle records, performing calculations for each, and displaying the results
-clearly for analysis and planning purposes.
-*/
-
-#include<iostream>
+#include <iostream>
 using namespace std;
 
-class Rectangle
-{
-    int Length, Width, Area, Perimeter; //class variables
+class Rectangle {
+private:
+    int length, width;
 
 public:
-
-    void SetDimensions(int l, int w)
-    {
-        Length = l;
-        Width = w;
+    void set(int l, int w) {
+        length = l;
+        width = w;
     }
 
-    int CalculateArea()
-    {
-        Area = Length*Width;
-        return Area;
+    int area() const {
+        return length * width;
     }
 
-    int CalculatePerimeter()
-    {
-        Perimeter = 2*(Length + Width);
-        return Perimeter;
+    int perimeter() const {
+        return 2 * (length + width);
     }
 
-    int ReturnLength()
-    {return Length;}
-
-    int ReturnWidth()
-    {return Width;}
+    void display() const {
+        cout << "Length: " << length << ", Width: " << width << endl;
+        cout << "Area: " << area() << " sq. units, Perimeter: " << perimeter() << " units" << endl;
+    }
 };
 
-int main()
-{
-    Rectangle R[10];
-    int Choice=0,Count=0;
-    int Length,Width,Area,Perimeter;
+int main() {
+    Rectangle rectangles[10];
+    int count = 0, choice;
 
-    do
-    {
-        cout<<"\n\nChoices:\n1.Add Rectangle,\n2.Update Dimensions of Rectangle,\n3.View Existing Rectangles\n0.Exit System\nEnter your Choice: ";
-        cin>>Choice; //choice based system
+    do {
+        cout << "\nMenu:\n"
+             << "1. Add a new Rectangle\n"
+             << "2. Update an existing Rectangle\n"
+             << "3. View all Rectangles\n"
+             << "0. Exit\n"
+             << "Enter choice: ";
+        cin >> choice;
 
-        switch (Choice)
-        {
-        case 1:
-            Count++;
-            cout<<"\nEnter Dimensions of New Rectangle "<<Count<<endl; //new rectangle
-            cin>>Length>>Width;
-            R[Count].SetDimensions(Length,Width); //input via user
-            cout<<"\nNew Rectangle Added!";
-            cout<<"\nTotal "<<Count<<" Rectangles in System";
-            cout<<"\nArea of Rectangle "<<Count<<" is "<<R[Count].CalculateArea()<<" sq. units.";
-            cout<<"\nPerimeter of Rectangle "<<Count<<" is "<<R[Count].CalculatePerimeter()<<" units.";
-        break;
-
-        case 2:
-            int s;
-            if(Count==0)
-            {
-                cout<<"\nNO Rectangles in System\nExiting...";
+        switch(choice) {
+            case 1: {
+                if (count >= 10) {
+                    cout << "Maximum number of rectangles reached.\n";
+                } else {
+                    int l, w;
+                    cout << "Enter length and width for Rectangle " << count + 1 << ": ";
+                    cin >> l >> w;
+                    rectangles[count].set(l, w);
+                    cout << "Rectangle " << count + 1 << " added!\n";
+                    count++;
+                }
                 break;
             }
-            else
-            {
-                cout<<"Enter the Serial no. of the Rectangle of which to Update Dimensions: ";
-                cin>>s; //update dimensions
-                cout<<"\nEnter new Dimensions of Rectangle:\n";
-                cin>>Length>>Width;
-                R[s-1].SetDimensions(Length,Width);//changing dimensions using the same input function
-                cout<<"\nRectangle Updated!";
-                cout<<"\nNew Length of Rectangle "<<s<<" is "<<R[s-1].ReturnLength()<<" units.";
-                cout<<"\nNew Width of Rectangle "<<s<<" is "<<R[s-1].ReturnWidth()<<" units.";
-                cout<<"\nNew Area of Rectangle "<<s<<" is "<<R[s-1].CalculateArea()<<" sq. units.";
-                cout<<"\nNew Perimeter of Rectangle "<<s<<" is "<<R[s-1].CalculatePerimeter()<<" units.";
-            }
-        break;
 
-        case 3:
+            case 2: {
+                if (count == 0) {
+                    cout << "No rectangles to update.\n";
+                } else {
+                    int index;
+                    cout << "Enter the Rectangle number to update (1 to " << count << "): ";
+                    cin >> index;
 
-            cout<<"\n\nViewing Existing "<<Count<<" Rectangles";
-            if(Count==0)
-            {
-                cout<<"\nNO Rectangles in System\nExiting...";
+                    if (index < 1 || index > count) {
+                        cout << "Invalid Rectangle number.\n";
+                    } else {
+                        int l, w;
+                        cout << "Enter new length and width: ";
+                        cin >> l >> w;
+                        rectangles[index - 1].set(l, w);
+                        cout << "Rectangle " << index << " updated!\n";
+                    }
+                }
                 break;
             }
-            for(int j=0;j<Count;j++)
-            {
-               cout<<"\n\nRectangle "<<j+1; //list of all rectangles
-              cout<<"\nLength of Rectangle "<<j+1<<" is "<<R[j].ReturnLength()<<" units.";
-              cout<<"\nWidth of Rectangle "<<j+1<<" is "<<R[j].ReturnWidth()<<" units.";
-             cout<<"\nArea of Rectangle "<<j+1<<" is "<<R[j].CalculateArea()<<" sq. units.";
-               cout<<"\nPerimeter of Rectangle "<<j+1<<" is "<<R[j].CalculatePerimeter()<<" units.";
+
+            case 3: {
+                if (count == 0) {
+                    cout << "No rectangles to display.\n";
+                } else {
+                    for (int i = 0; i < count; i++) {
+                        cout << "\nRectangle " << i + 1 << " details:\n";
+                        rectangles[i].display();
+                    }
+                }
+                break;
             }
-        break;
 
-        default:
-        break;
-        }
-    }while(Choice>=1 && Choice<=3);
+            case 0:
+                cout << "Exiting program...\n";
+                break;
 
-    cout<<"\nExiting System....";
-    cout<<"\n\nViewing Existing "<<Count<<" Rectangles";
-        for(int j=0;j<Count;j++)
-          {
-            cout<<"\n\nRectangle "<<j+1; //final list
-            cout<<"\nLength of Rectangle "<<j+1<<" is "<<R[j].ReturnLength()<<" units.";
-            cout<<"\nWidth of Rectangle "<<j+1<<" is "<<R[j].ReturnWidth()<<" units.";
-            cout<<"\nArea of Rectangle "<<j+1<<" is "<<R[j].CalculateArea()<<" sq. units.";
-            cout<<"\nPerimeter of Rectangle "<<j+1<<" is "<<R[j].CalculatePerimeter()<<" units.";
+            default:
+                cout << "Invalid choice. Please try again.\n";
         }
+    } while (choice != 0);
+
     return 0;
 }
