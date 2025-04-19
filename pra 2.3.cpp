@@ -11,8 +11,7 @@ public:
         cout << "Enter Account Number: ";
         cin >> accNo;
         cout << "Enter Name: ";
-        cin.ignore();
-        getline(cin, name);
+        cin >> name;
         cout << "Enter Initial Balance: ";
         cin >> balance;
         cout << "Account Created! Account No: " << accNo << endl;
