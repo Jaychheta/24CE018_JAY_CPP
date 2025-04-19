@@ -1,47 +1,42 @@
 #include <iostream>
-#include <vector>
 using namespace std;
 
 class Employee {
     string name;
     int age;
-    float basic, bonus;
+    float basicSalary;
+    float bonus;
 
-    // Inline function to calculate total salary
-    inline float totalSalary() {
-        return basic + bonus;
+    inline float calculateTotalSalary() {
+        return basicSalary + bonus;
     }
 
 public:
-    // Constructor with default bonus
+    // Constructor to initialize employee details with optional custom bonus
     Employee(string n, int a, float b, float bon = 10000) {
         name = n;
         age = a;
-        basic = b;
+        basicSalary = b;
         bonus = bon;
     }
 
-    // Function to show employee details
-    void showData() {
+    void displayDetails() {
         cout << "\nName: " << name;
         cout << "\nAge: " << age;
-        cout << "\nBasic Salary: " << basic;
+        cout << "\nBasic Salary: " << basicSalary;
         cout << "\nBonus: " << bonus;
-        cout << "\nTotal Salary: " << totalSalary();
+        cout << "\nTotal Salary: " << calculateTotalSalary();
     }
 };
 
 int main() {
-    vector<Employee> empList;
-    char ch = 'y';
+    string name;
+    int age;
+    float basicSalary, bonus;
+    char continueInput = 'y';
 
-    while (ch == 'y' || ch == 'Y') {
-        string name;
-        int age;
-        float basic, bonus;
-        char customBonus;
-
-        cout << "\nEnter Name: ";
+    while (continueInput == 'y' || continueInput == 'Y') {
+        cout << "\nEnter Employee Name: ";
         cin.ignore();
         getline(cin, name);
 
@@ -49,29 +44,24 @@ int main() {
         cin >> age;
 
         cout << "Enter Basic Salary: ";
-        cin >> basic;
+        cin >> basicSalary;
 
-        cout << "Do you want to enter custom bonus? (y/n): ";
-        cin >> customBonus;
+        cout << "Do you want to enter a custom bonus? (y/n): ";
+        cin >> continueInput;
 
-        if (customBonus == 'y' || customBonus == 'Y') {
-            cout << "Enter Bonus Amount: ";
+        Employee emp(name, age, basicSalary);  // Constructor is called here
+
+        if (continueInput == 'y' || continueInput == 'Y') {
+            cout << "Enter Custom Bonus Amount: ";
             cin >> bonus;
-            empList.push_back(Employee(name, age, basic, bonus));
-        } else {
-            empList.push_back(Employee(name, age, basic)); // default bonus used
+            emp = Employee(name, age, basicSalary, bonus); // Constructor is called again with custom bonus
         }
 
-        cout << "\nAdd another employee? (y/n): ";
-        cin >> ch;
+        emp.displayDetails();
+
+        cout << "\nDo you want to add another employee? (y/n): ";
+        cin >> continueInput;
     }
 
-    cout << "\n\n--- Employee Details ---";
-    for (int i = 0; i < empList.size(); i++) {
-        cout << "\n\nEmployee " << i + 1;
-        empList[i].showData();
-    }
-
-    cout << "\n\nThank you!";
     return 0;
 }
