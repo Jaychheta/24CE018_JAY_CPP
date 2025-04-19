@@ -1,21 +1,12 @@
 #include <iostream>
-#include <vector>
 using namespace std;
 
 class Product {
-private:
+public:
     int productID;
     string name;
     int quantity;
     double price;
-
-public:
-    Product() {
-        productID = 0;
-        name = "Unknown";
-        quantity = 0;
-        price = 0.0;
-    }
 
     void setDetails(int id, string n, int q, double p) {
         productID = id;
@@ -35,27 +26,28 @@ public:
     void displayProduct() const {
         cout << "ID: " << productID << ", Name: " << name << ", Quantity: " << quantity << ", Price: " << price << endl;
     }
-
-    int getProductID() const {
-        return productID;
-    }
 };
 
 class Inventory {
 private:
-    vector<Product> products;
+    Product products[10];  // Fixed size array of 10 products
+    int productCount = 0;
 
 public:
     void addProduct() {
-        Product p;
-        int id, quantity;
-        string name;
-        double price;
+        if (productCount < 10) {
+            Product p;
+            int id, quantity;
+            string name;
+            double price;
 
-        cout << "Enter Product ID, Name, Quantity, and Price: ";
-        cin >> id >> name >> quantity >> price;
-        p.setDetails(id, name, quantity, price);
-        products.push_back(p);
+            cout << "Enter Product ID, Name, Quantity, and Price: ";
+            cin >> id >> name >> quantity >> price;
+            p.setDetails(id, name, quantity, price);
+            products[productCount++] = p;
+        } else {
+            cout << "Inventory full. Cannot add more products." << endl;
+        }
     }
 
     void updateProductQuantity() {
@@ -63,9 +55,9 @@ public:
         cout << "Enter Product ID and new Quantity: ";
         cin >> id >> newQuantity;
 
-        for (Product &product : products) {
-            if (product.getProductID() == id) {
-                product.updateQuantity(newQuantity);
+        for (int i = 0; i < productCount; i++) {
+            if (products[i].productID == id) {
+                products[i].updateQuantity(newQuantity);
                 cout << "Product quantity updated successfully!" << endl;
                 return;
             }
@@ -75,15 +67,15 @@ public:
 
     void calculateTotalInventoryValue() {
         double totalValue = 0;
-        for (const Product &product : products) {
-            totalValue += product.calculateTotalValue();
+        for (int i = 0; i < productCount; i++) {
+            totalValue += products[i].calculateTotalValue();
         }
         cout << "Total Inventory Value: " << totalValue << endl;
     }
 
     void displayInventory() {
-        for (const Product &product : products) {
-            product.displayProduct();
+        for (int i = 0; i < productCount; i++) {
+            products[i].displayProduct();
         }
     }
 };
