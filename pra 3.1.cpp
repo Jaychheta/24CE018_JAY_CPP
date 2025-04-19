@@ -36,8 +36,7 @@ int main() {
 
     while (continueInput == 'y' || continueInput == 'Y') {
         cout << "\nEnter Employee Name: ";
-        cin.ignore();
-        getline(cin, name);
+        cin >> name;
 
         cout << "Enter Age: ";
         cin >> age;
