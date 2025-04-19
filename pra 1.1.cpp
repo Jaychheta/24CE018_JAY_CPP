@@ -2,12 +2,9 @@
 using namespace std;
 
 class BankAccount {
-private:
-    double balance;
+    double balance = 0;
 
 public:
-    BankAccount() { balance = 0; }
-
     void deposit(double amount) {
         if (amount > 0) {
             balance += amount;
@@ -33,34 +30,34 @@ public:
 
 int main() {
     BankAccount account;
-    double amount;
     int choice;
+    double amount;
 
-    do {
+    while (true) {
         cout << "\n1. Deposit\n2. Withdraw\n3. Check Balance\n4. Exit\nEnter choice: ";
         cin >> choice;
 
-        switch (choice) {
-            case 1:
-                cout << "Enter deposit amount: ";
-                cin >> amount;
-                account.deposit(amount);
-                break;
-            case 2:
-                cout << "Enter withdrawal amount: ";
-                cin >> amount;
-                account.withdraw(amount);
-                break;
-            case 3:
-                account.checkBalance();
-                break;
-            case 4:
-                cout << "Exiting..." << endl;
-                break;
-            default:
-                cout << "Invalid choice! Try again." << endl;
+        if (choice == 1) {
+            cout << "Enter deposit amount: ";
+            cin >> amount;
+            account.deposit(amount);
         }
-    } while (choice != 4);
+        else if (choice == 2) {
+            cout << "Enter withdrawal amount: ";
+            cin >> amount;
+            account.withdraw(amount);
+        }
+        else if (choice == 3) {
+            account.checkBalance();
+        }
+        else if (choice == 4) {
+            cout << "Exiting..." << endl;
+            break;
+        }
+        else {
+            cout << "Invalid choice! Try again." << endl;
+        }
+    }
 
     return 0;
 }
