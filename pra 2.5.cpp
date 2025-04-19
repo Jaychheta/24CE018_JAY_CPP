@@ -84,6 +84,6 @@ int main() {
 
     } while (choice != 0);
 
-    cout << "\nThank you for using the system!";
+   
     return 0;
 }
