@@ -12,7 +12,6 @@ class Employee {
     }
 
 public:
-    // Constructor to initialize employee details with optional custom bonus
     Employee(string n, int a, float b, float bon = 10000) {
         name = n;
         age = a;
@@ -49,12 +48,12 @@ int main() {
         cout << "Do you want to enter a custom bonus? (y/n): ";
         cin >> continueInput;
 
-        Employee emp(name, age, basicSalary);  // Constructor is called here
+        Employee emp(name, age, basicSalary);
 
         if (continueInput == 'y' || continueInput == 'Y') {
             cout << "Enter Custom Bonus Amount: ";
             cin >> bonus;
-            emp = Employee(name, age, basicSalary, bonus); // Constructor is called again with custom bonus
+            emp = Employee(name, age, basicSalary, bonus);
         }
 
         emp.displayDetails();
