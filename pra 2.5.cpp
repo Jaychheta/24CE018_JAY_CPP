@@ -42,7 +42,7 @@ public:
 
     void showData() {
         cout << "\nLoan ID          : " << loanID;
-        cout << "Name             : " << name;
+        cout << "\nName             : " << name;
         cout << "\nPrincipal Amount : " << principal;
         cout << "\nInterest Rate    : " << annualRate << "%";
         cout << "\nTenure (months)  : " << months;
