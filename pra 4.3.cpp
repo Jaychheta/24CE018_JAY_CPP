@@ -1,100 +1,75 @@
-/*
-A vehicle manufacturing company sought to create a robust system to organize 
-and manage the details of various cars produced under its brand. To accomplish 
-this, a hierarchical structure was conceptualized, reflecting the essential 
-components of a vehicle. At the foundation, a class was designed to represent 
-the type of fuel a vehicle uses. Another class was created to capture the brand 
-name of the vehicle. These two foundational elements were then combined into a 
-derived class specifically representing cars, integrating both fuel type and 
-brand information.
-Constructors were used at each level to ensure proper initialization of attributes, 
-allowing seamless integration of all details. Additionally, the ability to display 
-complete information about a car, including its fuel type and brand, was incorporated 
-into the system. To simulate a real-world scenario such as a service queue, multiple 
-cars were organized and processed sequentially using a structured approach. This not 
-only streamlined handling of cars but also provided an opportunity to compare different 
-methods of managing the collection and processing of vehicle data.
-*/
-
 #include<iostream>
-#include<vector>
 using namespace std;
-    
-class Fuel //bse 1 class
-{
-    string FuelType;
-protected:
-    
-    Fuel(string f){
-        FuelType = f;
-    }
 
-    void DisplayFuel(){
-        cout<<"\nFuel Type: "<<FuelType;
-    }
-};
-
-class Brand //base 2 class
-{
-    string BrandName;
-protected:
-    
-    Brand(string b){
-        BrandName = b;
-    }
-
-    void DisplayBrand(){
-        cout<<"\nBrand Name: "<<BrandName;
-    }
-};
-
-class Car : private Fuel, private Brand //derived class
-{
+// Fuel Class
+class Fuel {
 public:
-    
-    Car(string f, string b): Fuel(f), Brand(b) {}
-
-    void DisplayCar(){
-        DisplayBrand();
-        DisplayFuel();
+    string fuelType;
+    Fuel(string f) {
+        fuelType = f;
+    }
+    void displayFuel() {
+        cout << "Fuel Type: " << fuelType << endl;
     }
 };
-    
-int main()
-{
-    vector<Car> Cars;
-    int Choice=0, i=0;
+
+// Brand Class
+class Brand {
+public:
+    string brandName;
+    Brand(string b) {
+        brandName = b;
+    }
+    void displayBrand() {
+        cout << "Brand Name: " << brandName << endl;
+    }
+};
+
+// Car Class - Inheriting Fuel and Brand
+class Car : public Fuel, public Brand {
+public:
+    Car(string f, string b) : Fuel(f), Brand(b) {}
+
+    void displayCar() {
+        displayBrand();
+        displayFuel();
+    }
+};
+
+int main() {
+    Car* cars[100]; // Array of pointers to Car
+    int count = 0;
+    int choice;
     string brand, fuel;
 
-    do{
-        cout<<"\n\nCompany Car Database\nChoices:\n1. Enter New Car Information\n2. Display all Cars Information\n0. Exit System"
-            <<"\n\nEnter your Choice: ";
-        cin>>Choice;  
-    
+    do {
+        cout << "\n1. Add Car\n2. Show All Cars\n0. Exit\n";
+        cout << "Enter choice: ";
+        cin >> choice;
 
-        if(Choice==1){
-            cout<<"\nEnter Car Brand: ";
-            cin.ignore();
-            getline(cin, brand);
-            cout<<"Enter Fuel Type: ";
-            getline(cin, fuel);
+        if (choice == 1) {
+            cout << "Enter Brand: ";
+            cin >> brand;
+            cout << "Enter Fuel Type: ";
+            cin >> fuel;
 
-            Cars.push_back(Car(fuel, brand));
-            cout<<"\nNew Car Added!!";
+            cars[count] = new Car(fuel, brand);
+            cout << "Car Added!\n";
+            count++;
         }
-        else if(Choice==2){
-            cout<<"\nDisplaying all cars information:";
-            for(Car &c : Cars){
-                cout<<"\n\nCar "<<++i;
-                c.DisplayCar();
+        else if (choice == 2) {
+            if (count == 0)
+                cout << "No cars added yet.\n";
+            else {
+                for (int i = 0; i < count; i++) {
+                    cout << "\nCar " << i + 1 << ":\n";
+                    cars[i]->displayCar();
+                }
             }
         }
-        else
-        break;
 
-    }while(Choice==1||Choice==2);
+    } while (choice != 0);
 
-    cout<<"\n\nExiting System...";
-
+    cout << "\nExiting System...\n";
     return 0;
 }
