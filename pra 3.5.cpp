@@ -19,7 +19,9 @@ int main() {
     string number;
     int repeat;
 
+    cout << "Enter the number: ";
     cin >> number;
+    cout << "Enter the repeat factor: ";
     cin >> repeat;
 
     long long total = 0;
@@ -28,9 +30,12 @@ int main() {
         total += number[i] - '0';
     }
 
-    total = total * repeat;
+    cout << "Sum of digits of the number: " << total << endl;
 
-    cout << superDigit(total);
+    total = total * repeat;
+    cout << "Total after multiplication with repeat factor: " << total << endl;
+
+    cout << "Super Digit: " << superDigit(total) << endl;
 
     return 0;
 }
