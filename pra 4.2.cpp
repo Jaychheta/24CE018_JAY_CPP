@@ -43,7 +43,7 @@ int main() {
     int age;
     float id;
 
-    while(true) {
+    do {
         cout << "\n1. Add Employee\n2. Add Manager\n0. Exit\n";
         cout << "Enter choice: ";
         cin >> choice;
@@ -73,7 +73,7 @@ int main() {
         else {
             cout << "Invalid choice! Please try again.\n";
         }
-    }
+    } while (choice != 0);
 
     return 0;
 }
