@@ -1,90 +1,67 @@
 #include <iostream>
 using namespace std;
 
-#define PI 3.14159265358979323846
+class Fahrenheit; // Forward declaration
 
-// Abstract class
-class Shape {
-protected:
-    double Area;
+class Celsius {
+    float temp;
+public:
+    Celsius(float t = 0) { temp = t; }
+    float getTemp() { return temp; }
 
-    virtual void Calculate_area() = 0; // Pure virtual function
+    // Convert Celsius to Fahrenheit
+    operator Fahrenheit();
 
-    void Display() {
-        cout << "\nArea: " << Area << " sq. units";
+    // Equality check
+    bool operator==(Fahrenheit f);
+};
+
+class Fahrenheit {
+    float temp;
+public:
+    Fahrenheit(float t = 0) { temp = t; }
+    float getTemp() { return temp; }
+
+    // Convert Fahrenheit to Celsius
+    operator Celsius() {
+        return Celsius((temp - 32) * 5 / 9);
     }
 
-public:
-    virtual ~Shape() {}
-
-    void ShowArea() {
-        Display();
+    // Equality check
+    bool operator==(Celsius c) {
+        return ((temp - 32) * 5 / 9) == c.getTemp();
     }
 };
 
-// Rectangle class inherits Shape
-class Rectangle : public Shape {
-    double Length, Width;
+// Define conversion outside class
+Celsius::operator Fahrenheit() {
+    return Fahrenheit((temp * 9 / 5) + 32);
+}
 
-    void Calculate_area() override {
-        Area = Length * Width;
-    }
-
-public:
-    Rectangle(double l, double w) {
-        Length = l;
-        Width = w;
-        Calculate_area();
-    }
-};
-
-// Circle class inherits Shape
-class Circle : public Shape {
-    double Radius;
-
-    void Calculate_area() override {
-        Area = PI * Radius * Radius;
-    }
-
-public:
-    Circle(double r) {
-        Radius = r;
-        Calculate_area();
-    }
-};
+// Equality check from Celsius side
+bool Celsius::operator==(Fahrenheit f) {
+    return ((temp * 9 / 5) + 32) == f.getTemp();
+}
 
 int main() {
-    int choice;
-    double a, b;
+    Celsius c1(37);
+    Fahrenheit f1 = c1;
 
-    while (true) {
-        cout << "\n\n--- Area Calculator ---";
-        cout << "\n1. Circle";
-        cout << "\n2. Rectangle";
-        cout << "\n0. Exit";
-        cout << "\nEnter your choice: ";
-        cin >> choice;
+    Fahrenheit f2(98.6);
+    Celsius c2 = f2;
 
-        if (choice == 1) {
-            cout << "Enter radius: ";
-            cin >> a;
-            Shape* shape = new Circle(a);
-            shape->ShowArea();
-            delete shape;
-        } else if (choice == 2) {
-            cout << "Enter length: ";
-            cin >> a;
-            cout << "Enter width: ";
-            cin >> b;
-            Shape* shape = new Rectangle(a, b);
-            shape->ShowArea();
-            delete shape;
-        } else if (choice == 0) {
-            cout << "Exiting program...\n";
-            break;
-        } else {
-            cout << "Invalid choice! Try again.\n";
-        }
+    if (c1 == f2)
+        cout << "Temperatures are equal\n";
+    else
+        cout << "Temperatures are not equal\n";
+
+    // Static array to store converted Fahrenheit objects
+    Fahrenheit fArray[2];
+    fArray[0] = f1;
+    fArray[1] = Fahrenheit(100);
+
+    for (int i = 0; i < 2; i++) {
+        cout << fArray[i].getTemp() << " F\n";
     }
 
     return 0;
