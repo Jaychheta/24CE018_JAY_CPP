@@ -19,12 +19,20 @@ public:
 };
 
 int main() {
-    Point p(5, 10);
+    int x, y, dx, dy;
+
+    cout << "Enter initial x and y coordinates: ";
+    cin >> x >> y;
+    Point p(x, y);
     p.display();
 
-    p.move(3, 4)->move(-2, 1)->move(5, -3);
+    cout << "Enter movement for x and y (dx, dy): ";
+    cin >> dx >> dy;
+    p.move(dx, dy)->display();
 
-    p.display();
+    cout << "Enter movement for x and y (dx, dy): ";
+    cin >> dx >> dy;
+    p.move(dx, dy)->display();
 
     return 0;
 }
