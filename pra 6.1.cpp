@@ -56,18 +56,29 @@ public:
 
 int main() {
     DynamicArray arr;
+    int choice, value, index;
 
-    arr.addElement(10);
-    arr.addElement(20);
-    arr.addElement(30);
-    arr.addElement(40);
+    while (true) {
+        cout << "1. Add element\n2. Remove element\n3. Display array\n4. Exit\nEnter choice: ";
+        cin >> choice;
 
-    cout << "Array elements: ";
-    arr.display();
-
-    arr.removeElement(2);
-    cout << "Array after removal: ";
-    arr.display();
+        if (choice == 1) {
+            cout << "Enter value to add: ";
+            cin >> value;
+            arr.addElement(value);
+        } else if (choice == 2) {
+            cout << "Enter index to remove: ";
+            cin >> index;
+            arr.removeElement(index);
+        } else if (choice == 3) {
+            cout << "Array elements: ";
+            arr.display();
+        } else if (choice == 4) {
+            break;
+        } else {
+            cout << "Invalid choice, try again.\n";
+        }
+    }
 
     return 0;
 }
