@@ -10,7 +10,7 @@ protected:
     virtual void Calculate_area() = 0;
 
     void Display() {
-        cout << "\nArea: " << Area << " sq. units";
+        cout << "Area: " << Area << " sq. units";
     }
 
 public:
@@ -52,19 +52,19 @@ int main() {
     double a, b;
 
     while (true) {
-        cout << "\n\n-~Area Calculator~-"
+        cout << "-~Area Calculator~-"
              << "\nEnter 1 for Circle, 2 for Rectangle, 0 to Exit"
              << "\nEnter Choice: ";
         cin >> Choice;
 
         if (Choice == 1) {
-            cout << "\nEnter Circle Radius: ";
+            cout << "Enter Circle Radius: ";
             cin >> a;
             Shape* shape = new Circle(a);
             shape->ShowArea();
             delete shape;
         } else if (Choice == 2) {
-            cout << "\nEnter Rectangle Length: ";
+            cout << "Enter Rectangle Length: ";
             cin >> a;
             cout << "Enter Rectangle Width: ";
             cin >> b;
@@ -72,10 +72,10 @@ int main() {
             shape->ShowArea();
             delete shape;
         } else if (Choice == 0) {
-            cout << "\nExiting System...\n";
+            cout << "Exiting System...\n";
             break;
         } else {
-            cout << "\nInvalid Choice. Try again.";
+            cout << "Invalid Choice. Try again.";
         }
     }
 
