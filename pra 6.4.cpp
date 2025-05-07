@@ -16,7 +16,16 @@ public:
 };
 
 int main() {
-    Base* ptr = new Derived();
-    delete ptr;
+    int choice;
+    cout << "Enter 1 to create Derived object, 0 to exit: ";
+    cin >> choice;
+
+    if (choice == 1) {
+        Base* ptr = new Derived();
+        delete ptr;
+    } else {
+        cout << "Exiting...\n";
+    }
+
     return 0;
 }
