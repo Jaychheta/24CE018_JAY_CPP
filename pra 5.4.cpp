@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-class Fahrenheit;
+
 
 class Celsius {
     float temp;
